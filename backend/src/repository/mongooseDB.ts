@@ -82,3 +82,5 @@ export class MongooseDB {
         }
     }
 }
+
+export const mongooseDB = new MongooseDB()
