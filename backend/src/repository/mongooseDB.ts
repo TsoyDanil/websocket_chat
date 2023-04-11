@@ -6,6 +6,9 @@ import IUserGetDto from '../interfaces/IUserGetDto'
 import { generateJWT } from '../helpers/generateJWT'
 import IUserCreateDto from '../interfaces/IUserCreateDto'
 import { User } from '../models/User'
+import IMessage from '../interfaces/IMessage'
+import { Message } from '../models/Message'
+import IMessageDto from '../interfaces/IMessageDto'
 
 dotenv.config()
 
@@ -72,6 +75,47 @@ export class MongooseDB {
             }
             return response
         } catch(err: unknown){
+            const error = err as Error 
+            const response: IResponse<null> = {
+                status: EStatuses.FAILURE,
+                result: null,
+                message: error.message
+            }
+            return response
+        }
+    }
+
+    public getMessages = async(): Promise<IResponse<IMessage[] | null>> => {
+        try{
+            const data = await Message.find().populate('user').limit(30)
+            const response: IResponse<IMessage[] | null> = {
+                status: EStatuses.SUCCESS,
+                result: data,
+                message: 'Tracks found'
+            }
+            return response
+        } catch(err: unknown){
+            const error = err as Error 
+            const response: IResponse<null> = {
+                status: EStatuses.FAILURE,
+                result: null,
+                message: error.message
+            }
+            return response
+        }
+    }
+
+    public addMessage = async(messageDto: IMessageDto): Promise<IResponse<IMessage | null>> => {
+        try{
+            const message = new Message(messageDto)
+            const responseData = await message.save()
+            const response: IResponse<IMessage> = {
+                status: EStatuses.SUCCESS,
+                result: responseData,
+                message: 'Artist added'
+            }
+            return response
+        } catch (err: unknown){
             const error = err as Error 
             const response: IResponse<null> = {
                 status: EStatuses.FAILURE,

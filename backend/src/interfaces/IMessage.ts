@@ -3,6 +3,6 @@ import IUser from "./IUser";
 
 export default interface IMessage{
     _id: Types.ObjectId
-    author: IUser['username']
+    user: IUser
     message: string
 }

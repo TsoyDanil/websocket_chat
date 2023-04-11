@@ -1,7 +1,6 @@
 import express, { Request, Response, Router } from "express"
 import { EStatuses } from "../enum/EStatuses";
 import IResponse from "../interfaces/IResponse";
-import IUser from "../interfaces/IUser";
 import IUserGetDto from "../interfaces/IUserGetDto";
 import { auth } from "../middlewares/auth";
 import { usersService, UsersService } from "../services/usersService";

@@ -1,6 +1,6 @@
 import IMessage from "./IMessage";
 
 export default interface IMessageDto{
-    author: IMessage['author']
+    user: IMessage['_id']
     message: IMessage['message']
 }
