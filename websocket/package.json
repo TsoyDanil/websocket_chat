@@ -1,0 +1,25 @@
+{
+  "name": "homework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.attractor-school.com:30022/Danil_Tsoy/homework_95_tsoy_danil.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/dotenv": "^8.2.0",
+    "@types/shortid": "^0.0.29",
+    "@types/ws": "^8.5.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "shortid": "^2.2.16",
+    "ws": "^8.13.0"
+  }
+}
