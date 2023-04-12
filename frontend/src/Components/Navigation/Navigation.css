@@ -1,0 +1,20 @@
+.NavLink {
+    margin: 0;
+    display: flex;
+    height: 100%;
+    align-items: center;    
+}
+
+.NavLink a {
+    color: whitesmoke;
+    font-size: 15px;
+    text-decoration: none;
+    display: block;
+}
+
+.NavLink a:hover,
+.NavLink a:active,
+.NavLink a.active {
+    color: blueviolet;
+    text-shadow: 0px 0px 20px blueviolet;
+}

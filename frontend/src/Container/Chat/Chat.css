@@ -1,0 +1,17 @@
+.Chat {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    height: 90%;
+}
+
+.Chat_users {
+    width: 25%;
+    height: 100%;
+}
+
+.Chat_window {
+    width: 70%;
+    height: 100%;
+}
+
