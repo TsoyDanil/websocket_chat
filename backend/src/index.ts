@@ -1,41 +1,33 @@
-import express, { Express } from "express";
-import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import express, {Express} from "express";
 import cors from 'cors';
-import { healthCheckController } from "./controllers/healthCheck";
-import { mongooseDB } from "./repository/mongooseDB";
-import { usersController } from "./controllers/usersController";
-import { messagesController } from "./controllers/messagesController";
 import expressWs from "express-ws";
+import usersRouter from './routes/usersRoute';
+import dotenv from 'dotenv'
+import healthCheckRouter from './routes/healthCheckRouter';
 
 dotenv.config()
 
-class App {
-    private app: Express
-    constructor() {
-        this.app = express()
-        expressWs(this.app)
-        this.app.use(express.json())
-        this.app.use(cors())
-    }
+const app: Express = express()
 
-    public init = async(): Promise<void> => {
-        try{
-            this.app.use('/health-check', healthCheckController.getRouter())
-            this.app.use('/users', usersController.getRouter())
-            this.app.use('/messages', messagesController.getRouter())
-            this.app.listen(process.env.APP_PORT, () => {
-                console.log(`Server is running on http://localhost:${process.env.APP_PORT}`)
-            })
-            await mongooseDB.init()
-            process.on('exit', () => {
-                mongooseDB.close()
-            })
-        } catch(err: unknown){
-            console.log(err); 
-        }
+app.use(cors())
+app.use(express.json())
+app.use('/health-check', healthCheckRouter)
+app.use('/users', usersRouter)
+
+
+const run = async(): Promise<void> => {
+    try{
+        mongoose.connect(process.env.MONGO_CLIENT_URL || 'mongodb://localhost/TsoyDanilChatDB')
+        app.listen(process.env.APP_PORT, () => {
+            console.log(`Server started at http://localhost:${process.env.APP_PORT}`);
+        })
+        process.on('exit', () => {
+            mongoose.disconnect()
+        })
+    } catch(err: unknown){
+        console.log(err);
     }
 }
 
-const app = new App();
-
-app.init();
+run()
