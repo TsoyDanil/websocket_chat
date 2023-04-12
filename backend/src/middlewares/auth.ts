@@ -19,9 +19,9 @@ export const auth = (expressReq: Request, res: Response, next: NextFunction) => 
         next()
     } catch(err: unknown){
         const error = err as Error
-        const response: IResponse<undefined> = {
+        const response: IResponse<null> = {
             status: EStatuses.FAILURE,
-            result: undefined,
+            result: null,
             message: error.message
         }
         res.status(418).send(response)
