@@ -5,6 +5,7 @@ import { healthCheckController } from "./controllers/healthCheck";
 import { mongooseDB } from "./repository/mongooseDB";
 import { usersController } from "./controllers/usersController";
 import { messagesController } from "./controllers/messagesController";
+import expressWs from "express-ws";
 
 dotenv.config()
 
@@ -12,6 +13,7 @@ class App {
     private app: Express
     constructor() {
         this.app = express()
+        expressWs(this.app)
         this.app.use(express.json())
         this.app.use(cors())
     }
