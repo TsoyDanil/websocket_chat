@@ -87,11 +87,11 @@ export class MongooseDB {
 
     public getMessages = async(): Promise<IResponse<IMessage[] | null>> => {
         try{
-            const data = await Message.find().populate('user').limit(30)
+            const data = (await Message.find().populate('user').sort({$natural:-1}).limit(30)).reverse()
             const response: IResponse<IMessage[] | null> = {
                 status: EStatuses.SUCCESS,
                 result: data,
-                message: 'Tracks found'
+                message: 'Messages found'
             }
             return response
         } catch(err: unknown){

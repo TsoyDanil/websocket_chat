@@ -6,6 +6,7 @@ const MessageSchema: Schema = new Schema<IMessage>({
         type: Schema.Types.ObjectId,
         ref: 'User',
         minlength: 1,
+        trim: true,
         required: [true, 'User id has to be provided']
     },
     message: {
@@ -14,6 +15,6 @@ const MessageSchema: Schema = new Schema<IMessage>({
         minlength: 1,
         required: [true, 'Username should exist']
     }
-})
+}, {versionKey: false})
 
 export const Message = mongoose.model<IMessage>('Message', MessageSchema)
