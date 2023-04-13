@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from "react";
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { getAllMessages, getMessages, getOnlineUser, deleteOflineUser } from "../../Store/Services/messagesSlice";
+import { getAllMessages, getMessages, getOnlineUser, deleteOfflineUser } from "../../Store/Services/messagesSlice";
 import UserList from "../../Components/UserList/UserList";
 import ChatWindow from "../../Components/ChatWindow/ChatWindow";
 import './Chat.css';
@@ -36,7 +36,7 @@ const Chat = () => {
                 dispatch(getOnlineUser(decodedMessage.user));
             };
             if(decodedMessage.type === 'CLOSED_CHAT_USER') {
-                dispatch(deleteOflineUser(decodedMessage.id));
+                dispatch(deleteOfflineUser(decodedMessage.id));
             };
         };
 

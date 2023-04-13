@@ -1,6 +1,8 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "../../AxiosBaseUrl";
 
+const namespace = 'users'
+
 const initialState = {
     user: null,
     isLoading: false,
@@ -12,7 +14,7 @@ const initialState = {
 };
 
 export const loginUser = createAsyncThunk(
-    'users/login',
+    `${namespace}/loginUser`,
     async (payload, thunkApi) => {
         try {
             const res = await axios.post('/users/sessions', payload.userData);
@@ -29,7 +31,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const registerUser = createAsyncThunk(
-    'users/register',
+    `${namespace}/registerUser`,
     async (payload, thunkApi) => {
         try {
             return await axios.post('/users', payload.userData).then(res => res.data);
@@ -44,7 +46,7 @@ export const registerUser = createAsyncThunk(
 );
 
 export const userLogout = createAsyncThunk(
-    'logout/users',
+    `${namespace}/userLogout`,
     async (payload, thunkAPI) => {
         try {
             const token = thunkAPI.getState().users.token;
@@ -60,7 +62,7 @@ export const userLogout = createAsyncThunk(
 );
 
 const usersSlice = createSlice({
-    name: 'users',
+    name: namespace,
     initialState,
     reducers: {
         getMessages: (state, action) => {
@@ -79,38 +81,43 @@ const usersSlice = createSlice({
             state.user = null;
         }
     },
-    extraReducers: {
-        [registerUser.pending]: (state) => {
+    extraReducers: (builder) => {
+        builder
+        .addCase(registerUser.pending, (state) => {
             state.isLoading = true;
             state.loginError = null;
             state.global = null;
             state.registerError = null;
-        },
-        [registerUser.rejected]: (state, action) => {
+        })
+        .addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error;
-        },
-        [registerUser.fulfilled]: (state, action) => {
-            state.registerStatus = action.payload.user;
+        })
+        .addCase(registerUser.fulfilled, (state, action) => {
             state.isLoading = false;
-        },
-        [loginUser.pending]: (state) => {
+            if (action.payload.user){
+                state.registerStatus = action.payload.user;
+            }
+        })
+        .addCase(loginUser.pending, (state) => {
             state.isLoading = true;
             state.loginError = null;
             state.global = null;
             state.registerError = null;
-        },
-        [loginUser.rejected]: (state, action) => {
+        })
+        .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error;
-        },
-        [loginUser.fulfilled]: (state, action) => {
-            state.user = action.payload;
+        })
+        .addCase(loginUser.fulfilled, (state, action) => {
             state.isLoading = false;
-        }
+            if (action.payload){
+                state.user = action.payload;
+            }
+        })
     }
 });
 
 
 export const {catchLoginError, catchRegisterError, globalError, logoutUser, getMessages} = usersSlice.actions;
-export default usersSlice.reducer;
+export default usersSlice;

@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const namespace = 'messages'
 
 const initialState = {
     messages: [],
@@ -8,7 +9,7 @@ const initialState = {
 
 
 const messagesSlice = createSlice({
-    name: 'messages',
+    name: namespace,
     initialState,
     reducers: {
         getMessages: (state, action) => {
@@ -20,7 +21,7 @@ const messagesSlice = createSlice({
         getOnlineUser: (state, action) => {
             state.users = action.payload;
         },
-        deleteOflineUser: (state, action) => {
+        deleteOfflineUser: (state, action) => {
             const index = state.users.findIndex(user => user._id === action.payload);
             state.users.splice(index, 1);
         }
@@ -28,5 +29,5 @@ const messagesSlice = createSlice({
 });
 
 
-export const {getMessages, getAllMessages, getOnlineUser, deleteOflineUser} = messagesSlice.actions;
-export default messagesSlice.reducer;
+export const {getMessages, getAllMessages, getOnlineUser, deleteOfflineUser} = messagesSlice.actions;
+export default messagesSlice;

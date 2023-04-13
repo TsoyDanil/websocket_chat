@@ -3,17 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import usersReducer from './Store/Services/usersSlice.js';
-import messagesReducer from './Store/Services/messagesSlice.js';
 import reportWebVitals from './reportWebVitals';
-
-const store = configureStore({
-  reducer: {
-    users: usersReducer,
-    messages: messagesReducer
-  }
-});
+import { store } from './Store/store';
   
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
