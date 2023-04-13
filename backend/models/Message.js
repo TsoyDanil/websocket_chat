@@ -14,6 +14,7 @@ const MessageScheme = new Scheme({
     },
     datetime: {
         type: Date,
+        required: false,
         default: Date.now()
     }
 });

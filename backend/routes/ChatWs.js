@@ -1,8 +1,8 @@
 import express from 'express';
 import expressWs from 'express-ws';
-import { nanoid } from 'nanoid';
 import User from '../models/User.js';
 import Message from '../models/Message.js';
+import shortid from 'shortid';
 
 const router = express.Router();
 expressWs(router);
@@ -11,7 +11,7 @@ const activeConnections = {};
 const users = [];
 
 router.ws('/', (ws, req) => {
-    const id = nanoid();
+    const id = shortid.generate();
     console.log(`Client connected id=${id}`);
     activeConnections[id] = ws;
 
@@ -35,12 +35,12 @@ router.ws('/', (ws, req) => {
                 });
                 break;
             case 'CLOSED_CHAT':
-                const oflineUser = await User.find({_id: decodedMessage.user._id});
+                const offlineUser = await User.find({_id: decodedMessage.user._id});
                 Object.keys(activeConnections).forEach(connId => {
                     const conn = activeConnections[connId];
                     conn.send(JSON.stringify({
                         type: "CLOSED_CHAT_USER",
-                        id: oflineUser[0]._id
+                        id: offlineUser[0]._id
                     }));
                 });
                 break;

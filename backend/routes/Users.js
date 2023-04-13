@@ -1,30 +1,30 @@
 import express from 'express';
 import User from '../models/User.js';
+import shortid from 'shortid';
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
     try{
-        const {username,password} = req.body;
         const user = new User({
-            username,
-            password
+            username: req.body.username,
+            password: req.body.password
         });
         user.generateToken();
         await user.save();
         res.send(user);
     }catch(error){
-        return res.status(400).send(error);
+        return res.status(418).send(error);
     };
 });
 
 router.post('/sessions', async (req, res) => {
     const user = await User.findOne({username: req.body.username});
-    if(!user) return res.status(400).send({error: 'User not found'});
+    if(!user) return res.status(418).send({error: 'User not found'});
 
     const isMatch = await user.checkPassword(req.body.password);
 
-    if(!isMatch) return res.status(400).send({error: 'Password is wrong!'});
+    if(!isMatch) return res.status(418).send({error: 'Password is wrong!'});
 
     return res.send(user);
 });
@@ -39,7 +39,7 @@ router.delete('/sessions', async (req, res) => {
 
     if(!user) return res.send(successMessage);
 
-    user.token = nanoid();
+    user.token = shortid.generate();
     await user.save({ validateBeforeSave: false });
 
     return res.send(successMessage);
