@@ -10,7 +10,6 @@ import './Register.css';
 const Register = (props) => {
     const {registerError, isLoading} = useSelector(state => state.users, shallowEqual);
     const dispatch = useDispatch();
-
     const [state, setState] = useState({
         username: '',
         password: ''
@@ -21,9 +20,9 @@ const Register = (props) => {
         setState(prevState => ({...prevState, [name]: value}));
     };
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        dispatch(registerUser({
+        await dispatch(registerUser({
             userData: {...state}
         }));
     };

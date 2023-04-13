@@ -22,8 +22,7 @@ const messagesSlice = createSlice({
             state.users = action.payload;
         },
         deleteOfflineUser: (state, action) => {
-            const index = state.users.findIndex(user => user._id === action.payload);
-            state.users.splice(index, 1);
+            state.users = state.users.filter((user) => user._id !== action.payload)
         }
     }
 });

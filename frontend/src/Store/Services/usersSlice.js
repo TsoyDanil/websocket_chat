@@ -72,6 +72,7 @@ const usersSlice = createSlice({
             state.registerError = action.payload;
         },
         catchLoginError: (state, action) => {
+            console.log(action.payload);
             state.loginError = action.payload;
         },
         globalError: (state, action) => {

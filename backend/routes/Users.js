@@ -5,10 +5,11 @@ import shortid from 'shortid';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+    const {username, password} = req.body
     try{
         const user = new User({
-            username: req.body.username,
-            password: req.body.password
+            username,
+            password
         });
         user.generateToken();
         await user.save();
