@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import './User.css';
 
 
-const User = ({user}) => {
+const User = (props) => {
     const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {
           backgroundColor: '#44b700',
@@ -42,9 +42,9 @@ const User = ({user}) => {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 variant="dot"
             >
-                <Avatar sx={{ bgcolor: 'blueviolet'}}>{user}</Avatar>
+                <Avatar sx={{ bgcolor: 'blueviolet'}}>{props.user}</Avatar>
             </StyledBadge>
-            <p className="username">{user}</p>
+            <p className="username">{props.user}</p>
         </div>
     );
 };  

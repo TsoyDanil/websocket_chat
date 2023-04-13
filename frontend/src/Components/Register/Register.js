@@ -7,7 +7,7 @@ import Spinner from "../UI/Spinner/Spinner";
 import './Register.css';
 
 
-const Register = ({registerState}) => {
+const Register = (props) => {
     const {registerError, isLoading} = useSelector(state => state.users, shallowEqual);
     const dispatch = useDispatch();
 
@@ -21,15 +21,15 @@ const Register = ({registerState}) => {
         setState(prevState => ({...prevState, [name]: value}));
     };
 
-    const submitHandler = async (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
-        await dispatch(registerUser({
+        dispatch(registerUser({
             userData: {...state}
         }));
     };
 
     return(
-        <div className={registerState}>
+        <div className={props.registerState}>
             {isLoading ? <Spinner/> : null}
             {registerError && <MyAlert alertText={registerError.errors['username'].message}/>}
             <Form 

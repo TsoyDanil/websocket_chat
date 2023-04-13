@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Message from '../Message/Message';
 import './ChatWindow.css';
 
-
 const ChatWindow = (props) => {
     return (
         <div className='window'>

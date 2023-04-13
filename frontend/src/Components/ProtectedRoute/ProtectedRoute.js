@@ -1,14 +1,14 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ isAllowed, redirectedPath, children }) => {
-    if(!isAllowed) {
-        return <Navigate to={redirectedPath} replace />
+const ProtectedRoute = (props) => {
+    if(!props.isAllowed) {
+        return <Navigate to={props.redirectedPath} replace />
     }
 
     return (
         <>
-            {children || <Outlet/>}
+            {props.children || <Outlet/>}
         </>
     );
 };

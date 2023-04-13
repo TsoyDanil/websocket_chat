@@ -3,12 +3,12 @@ import User from "../User/User";
 import './UserList.css';
 
 
-const UserList = ({users}) => {
+const UserList = (props) => {
     return (
         <div className="UserList">
             <p className="onlineUser">Online users</p>
             {
-                users.map((user, idx) => {
+                props.users.length && props.users.map((user, idx) => {
                     return (
                         <User key={user._id + idx} user={user.username}/>
                     )

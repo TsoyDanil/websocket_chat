@@ -2,11 +2,11 @@ import React from "react";
 import './Message.css';
 
 
-const Message = ({author, message}) => {
+const Message = (props) => {
     return (
         <div className="Message">
-            <h3 className="author">{author}:</h3>
-            <p className="authorMessage">{message}</p>
+            <h3 className="author">{props.author}:</h3>
+            <p className="authorMessage">{props.message}</p>
         </div>
     );
 };

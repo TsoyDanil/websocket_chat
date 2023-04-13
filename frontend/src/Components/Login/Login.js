@@ -8,7 +8,7 @@ import Spinner from "../UI/Spinner/Spinner";
 import './Login.css';
 
 
-const Login = ({loginState}) => {
+const Login = (props) => {
     const {loginError, isLoading} = useSelector(state => state.users, shallowEqual);
     const navigate = useNavigate('/');
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Login = ({loginState}) => {
     };
 
     return(
-        <div className={loginState}>
+        <div className={props.loginState}>
             {isLoading ? <Spinner/> : null}
             {loginError && <MyAlert alertText={loginError.error}/>}
             <Form 
